@@ -52,6 +52,18 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: followups; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE followups (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    message_id uuid NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    body text NOT NULL
+);
+
+
+--
 -- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -115,6 +127,14 @@ CREATE TABLE users (
 
 
 --
+-- Name: followups_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY followups
+    ADD CONSTRAINT followups_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -160,6 +180,48 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: followups_message_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX followups_message_id_index ON followups USING btree (message_id);
+
+
+--
+-- Name: messages_producer_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX messages_producer_id_index ON messages USING btree (producer_id);
+
+
+--
+-- Name: messages_target_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX messages_target_id_index ON messages USING btree (target_id);
+
+
+--
+-- Name: notifications_message_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX notifications_message_id_index ON notifications USING btree (message_id);
+
+
+--
+-- Name: notifications_user_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX notifications_user_id_index ON notifications USING btree (user_id);
+
+
+--
+-- Name: users_heroku_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX users_heroku_id_index ON users USING btree (heroku_id);
 
 
 --

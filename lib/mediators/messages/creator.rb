@@ -1,6 +1,6 @@
 module Mediators::Messages
   class Creator < Mediators::Base
-    def initialize(producer: producer, title:, body:, target_type:, target_id:)
+    def initialize(producer:, title:, body:, target_type:, target_id:)
       @message = Message.new(
                    producer_id: producer.id,
                    title: title,

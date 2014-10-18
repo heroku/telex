@@ -25,11 +25,16 @@ describe Endpoints::Producer::Messages do
     }
   end
 
-  def do_post
-    post '/producer/messages', MultiJson.encode(@message_body)
+  def do_message_post
+    response = nil
+    Sidekiq::Testing.inline! do
+      response = post '/producer/messages', MultiJson.encode(@message_body)
+      expect(response.status).to eq(201)
+    end
+    MultiJson.decode(response.body)['id']
   end
 
-  it 'works' do
+  it 'works on the initial message' do
     # sanity checks
     expect(User.count).to eq(1)
     existing_user = User.first
@@ -38,10 +43,8 @@ describe Endpoints::Producer::Messages do
     expect(existing_user.heroku_id).to eq(@h_user1.heroku_id)
 
     # action
-    Sidekiq::Testing.inline! do
-      do_post
-      existing_user.reload
-    end
+    do_message_post
+    existing_user.reload
 
     # verification
     expect(last_response.status).to eq(201)
@@ -53,6 +56,21 @@ describe Endpoints::Producer::Messages do
     expect(notifications.map(&:user_id)).to match(users.map(&:id))
     expect(notifications.count).to eq(2)
 
+    deliveries = Mail::TestMailer.deliveries
+    expect(deliveries.map(&:to).flatten).to match(users.map(&:email))
+    expect(deliveries.size).to eq(2)
+  end
+
+  it 'allows followup' do
+    id = do_message_post
+    Mail::TestMailer.deliveries.clear
+
+    Sidekiq::Testing.inline! do
+      response = post "/producer/messages/#{id}/followups", MultiJson.encode( {body: Faker::Company.bs} )
+      expect(response.status).to eq(201)
+    end
+
+    users = User.all
     deliveries = Mail::TestMailer.deliveries
     expect(deliveries.map(&:to).flatten).to match(users.map(&:email))
     expect(deliveries.size).to eq(2)

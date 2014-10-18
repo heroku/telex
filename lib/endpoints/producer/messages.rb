@@ -22,6 +22,21 @@ module Endpoints
         end
       end
 
+      post '/:message_id/followups' do
+        begin
+          message = Message[id: params['message_id'], producer_id: current_producer.id]
+          followup = Mediators::Followups::Creator.run(
+            message: message,
+            body:    data['body']
+          )
+
+         status 201
+         MultiJson.encode({id: followup.id})
+        rescue
+          raise Pliny::Errors::NotAcceptable
+        end
+      end
+
     end
 
     private
