@@ -4,7 +4,16 @@
 
 ![telex](docs/telex-cc-by-sa-jens-ohlig.jpg)
 
-## setup
+## Setup
+
+To run locally:
+
+```
+$ bin/setup
+```
+
+To deploy to the platform:
+
 ```
 h addons:add hpg:s0
 h pg:promote <that database>
@@ -18,3 +27,7 @@ h config:set HEROKU_API_URL=https://telex:<key>@api.heroku.com
 git push heroku master
 h run rake db:migrate
 ```
+
+## Production
+
+- Deployed to the platform on apps `telex` and `telex-staging`.
