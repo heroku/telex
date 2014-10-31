@@ -31,3 +31,7 @@ h run rake db:migrate
 ## Production
 
 - Deployed to the platform on apps `telex` and `telex-staging`.
+
+## Operations
+
+Refer to [Telex @ engineering-docs](https://github.com/heroku/engineering-docs/blob/master/components/telex/README.md)
