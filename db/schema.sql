@@ -87,7 +87,8 @@ CREATE TABLE notifications (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone,
     user_id uuid NOT NULL,
-    message_id uuid NOT NULL
+    message_id uuid NOT NULL,
+    read_at timestamp with time zone
 );
 
 
@@ -218,6 +219,13 @@ CREATE INDEX notifications_user_id_index ON notifications USING btree (user_id);
 
 
 --
+-- Name: notifications_user_id_message_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX notifications_user_id_message_id_index ON notifications USING btree (user_id, message_id);
+
+
+--
 -- Name: users_heroku_id_index; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -225,6 +233,54 @@ CREATE INDEX users_heroku_id_index ON users USING btree (heroku_id);
 
 
 --
+-- Name: followups_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY followups
+    ADD CONSTRAINT followups_message_id_fkey FOREIGN KEY (message_id) REFERENCES messages(id);
+
+
+--
+-- Name: messages_producer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_producer_id_fkey FOREIGN KEY (producer_id) REFERENCES producers(id);
+
+
+--
+-- Name: messages_producer_id_fkey1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_producer_id_fkey1 FOREIGN KEY (producer_id) REFERENCES producers(id);
+
+
+--
+-- Name: notifications_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notifications
+    ADD CONSTRAINT notifications_message_id_fkey FOREIGN KEY (message_id) REFERENCES messages(id);
+
+
+--
+-- Name: notifications_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notifications
+    ADD CONSTRAINT notifications_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
+INSERT INTO "schema_migrations" ("filename") VALUES ('1407447674_create_producers.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1408052086_create_messages.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1409180490_create_users.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1409788381_create_notifications.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1413499263_create_followups.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1413499264_add_indexes.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1415147638_notification-add-read-at.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1415930380_add-constraints.rb');

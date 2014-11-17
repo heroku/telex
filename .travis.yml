@@ -7,6 +7,6 @@ script: bundle exec rspec
 services:
 env:
 rvm:
-  - 2.1.4
+  - 2.1.5
 notifications:
   email: false

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Mediators::Followups::Creator do
   before do
-    @message = double('message', id: SecureRandom.uuid)
+    @message = Fabricate(:message)
     @creator = described_class.new(message: @message,
                                    body: Faker::Company.catch_phrase)
 

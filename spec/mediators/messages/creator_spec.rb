@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe Mediators::Messages::Creator do
   before do
-    @creator = described_class.new(producer: double('producer', id: SecureRandom.uuid),
+    producer = Fabricate(:producer)
+    @creator = described_class.new(producer: producer,
                                   title: Faker::Company.bs,
                                   body: Faker::Company.catch_phrase,
                                   target_type: 'user',

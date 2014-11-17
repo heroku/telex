@@ -104,7 +104,7 @@ describe Endpoints::ProducerAPI::Messages do
       end
 
       it "fails when the message belongs to a different producer" do
-        @message.producer_id = SecureRandom.uuid
+        @message.producer = Fabricate(:producer)
         @message.save
         do_post
         expect(last_response.status).to eq(422)
