@@ -8,10 +8,6 @@ describe Endpoints::ProducerAPI::Messages do
     Routes
   end
 
-  def schema_path
-    "./docs/producer/schema.json"
-  end
-
   before do
     header "Content-Type", "application/json"
     @message_body = {
@@ -42,11 +38,10 @@ describe Endpoints::ProducerAPI::Messages do
       it 'returns correct status code and conforms to schema' do
         do_post
         expect(last_response.status).to eq(201)
-  #      assert_schema_conform
       end
 
       it 'with bad data, returns a 422' do
-        @message_body = nil
+        @message_body = {}
         do_post
         expect(last_response.status).to eq(422)
       end

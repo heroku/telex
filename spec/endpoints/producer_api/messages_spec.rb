@@ -14,6 +14,7 @@ describe Endpoints::ProducerAPI::Messages do
     end
 
     before do
+      header "Content-Type", "application/json"
       @message_body = {
         title: 'Congratulations',
         body: 'You are a winner',
@@ -55,6 +56,7 @@ describe Endpoints::ProducerAPI::Messages do
 
   describe "POST /messages/:id/followups" do
     def do_post
+      header "Content-Type", "application/json"
       post "/messages/#{@message.id}/followups", MultiJson.encode(@followup_body)
     end
 

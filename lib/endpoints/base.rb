@@ -3,6 +3,7 @@ module Endpoints
   class Base < Sinatra::Base
     register Pliny::Extensions::Instruments
     register Sinatra::Namespace
+    register Sinatra::Schema
 
     helpers Pliny::Helpers::Encode
     helpers Pliny::Helpers::Params
