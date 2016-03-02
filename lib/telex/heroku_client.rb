@@ -20,7 +20,10 @@ module Telex
     end
 
     def app_info(app_uuid)
-      get("/apps/#{app_uuid}")
+      get(
+        "/apps/#{app_uuid}",
+        "X-Heroku-Include-Deleted-Apps" => true
+      )
     end
 
     def app_collaborators(app_uuid)
