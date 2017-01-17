@@ -1,8 +1,9 @@
 module Mediators::Notifications
   class Creator < Mediators::Base
-    def initialize(notifiable:, message:)
+    def initialize(notifiable:, message:, skip_email:)
       self.notifiable = notifiable
       self.message = message
+      self.skip_email = skip_email
     end
 
     def call
@@ -23,9 +24,10 @@ module Mediators::Notifications
     end
 
     private
-    attr_accessor :notifiable, :message, :notification
+    attr_accessor :notifiable, :message, :notification, :skip_email
 
     def send_email
+      return if skip_email
       emailer = Telex::Emailer.new(
         email: notifiable.email,
         notification_id: notification.id,
