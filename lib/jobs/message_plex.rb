@@ -9,9 +9,9 @@ module Jobs
       200 * (count + 1) # (i.e. 200, 400, 600, 800... seconds)
     end
 
-    def perform(message_id)
+    def perform(message_id, skip_email=false)
       message = Message[id: message_id]
-      Mediators::Messages::Plexer.run(message: message)
+      Mediators::Messages::Plexer.run(message: message, skip_email: skip_email)
     end
   end
 end

@@ -16,23 +16,42 @@ module Mediators::Messages
     end
 
     def call
-      Message.new(@args).tap do |msg|
-        if msg.target_type == Message::APP && (msg.title.include?(APP) || msg.body.include?(APP))
-          app_info = heroku_client.app_info(msg.target_id, base_headers_only: false)
-          msg[:title] = msg[:title].gsub(APP, app_info.fetch("name"))
-          msg[:body] = msg[:body].gsub(APP, app_info.fetch("name"))
-        end
-        msg.save
-        Pliny.log(@args.merge(messages_creator: true, telex: true))
-        Jobs::MessagePlex.perform_async(msg.id)
-        Telex::Sample.count "messages"
-      end
+      replace_app_info
+
+      Pliny.log(@args.merge(messages_creator: true, telex: true))
+      Jobs::MessagePlex.perform_async(msg.id, skip_email?(msg))
+      Telex::Sample.count "messages"
+      msg
     end
 
     private
+    def msg
+      @msg ||= Message.new(@args)
+    end
 
     def heroku_client
       @heroku_client ||= Telex::HerokuClient.new
+    end
+
+    def app_info
+      @app_info ||= heroku_client.app_info(msg.target_id, base_headers_only: false)
+    end
+
+    def replace_app_info
+      if msg.target_type == Message::APP && (msg.title.include?(APP) || msg.body.include?(APP))
+        msg[:title] = msg[:title].gsub(APP, app_info.fetch("name"))
+        msg[:body] = msg[:body].gsub(APP, app_info.fetch("name"))
+      end
+      msg.save
+    end
+
+    def skip_email?(msg)
+      case msg.target_type
+      when Message::APP
+        !!app_info["name"].match(/^direwolf-/)
+      else
+        false
+      end
     end
   end
 end

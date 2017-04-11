@@ -26,10 +26,10 @@ module HerokuAPIMock
   end
 
   HerokuMockApp = Struct.new(:id)
-  def create_heroku_app(owner:, collaborators:[])
+  def create_heroku_app(name: "example", owner:, collaborators:[])
     app = HerokuMockApp.new(SecureRandom.uuid)
     app_response = {
-      "name" => "example",
+      "name" => name,
         "owner" => {
           "email" => owner.email,
           "id" => owner.heroku_id
