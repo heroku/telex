@@ -12,7 +12,8 @@ unless Config.rack_env == 'test'
     config.scrub_headers |= Rollbar::Blanket.headers
 
     config.exception_level_filters.merge!(
-      'Telex::Emailer::DeliveryError' => 'warning'
+      "Telex::Emailer::DeliveryError" => "warning",
+      "Pliny::Errors::HTTPStatusError" => "ignore"
     )
   end
 end
