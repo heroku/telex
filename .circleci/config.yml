@@ -32,7 +32,7 @@ commands:
 
 references:
   default_docker_ruby_executor: &default_docker_ruby_executor
-    image: ruby:2.6.2
+    image: ruby:2.6.5
     environment:
       PGHOST: 127.0.0.1
       PGUSER: telex-ci-test
