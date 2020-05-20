@@ -9,7 +9,7 @@ gem "mail"
 gem "multi_json"
 gem "oj"
 gem "pg"
-gem "pliny", "~> 0.16"
+gem "pliny", "~> 0.27", ">= 0.27.1"
 gem "pry", require: false # Make Pry available in production `heroku console` sessions
 gem "pry-doc", require: false
 gem "puma", "~> 3.11"
