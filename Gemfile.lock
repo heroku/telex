@@ -9,7 +9,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    backports (3.12.0)
+    backports (3.17.2)
     blacklist_hash (2.0.0)
     byebug (11.0.1)
     clockwork (2.0.3)
@@ -63,6 +63,8 @@ GEM
     mini_mime (1.0.1)
     minitest (5.14.1)
     multi_json (1.14.1)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     nenv (0.3.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -92,8 +94,8 @@ GEM
       yard (~> 0.9.11)
     public_suffix (4.0.1)
     puma (3.12.6)
-    rack (1.6.13)
-    rack-protection (1.5.5)
+    rack (2.2.2)
+    rack-protection (2.0.0)
       rack
     rack-ssl (1.4.1)
       rack
@@ -121,6 +123,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
+    ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
     safe_yaml (1.0.5)
     sequel (4.49.0)
@@ -135,16 +138,17 @@ GEM
       rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
-    sinatra (1.4.8)
-      rack (~> 1.5)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
-    sinatra-contrib (1.4.7)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    sinatra-contrib (2.0.0)
       backports (>= 2.0)
       multi_json
-      rack-protection
-      rack-test
-      sinatra (~> 1.4.0)
+      mustermann (~> 1.0)
+      rack-protection (= 2.0.0)
+      sinatra (= 2.0.0)
       tilt (>= 1.3, < 3)
     sinatra-router (0.2.4)
       sinatra (>= 1.4, < 3.0)
@@ -168,7 +172,7 @@ DEPENDENCIES
   addressable
   blacklist_hash (~> 2.0.0)!
   clockwork
-  committee
+  committee (>= 3.0.1)
   database_cleaner
   dotenv
   erubis
@@ -185,8 +189,8 @@ DEPENDENCIES
   pry-byebug
   pry-doc
   puma (~> 3.12, >= 3.12.6)
-  rack-ssl
-  rack-test
+  rack-ssl (>= 1.4.1)
+  rack-test (>= 1.1.0)
   rack-timeout (~> 0.4)
   rake
   redcarpet
@@ -196,10 +200,10 @@ DEPENDENCIES
   sequel (~> 4.30)
   sequel-paranoid
   sequel_pg
-  sidekiq
-  sinatra (~> 1.4)
-  sinatra-contrib
-  sinatra-router
+  sidekiq (>= 5.2.5)
+  sinatra (~> 2.0, >= 2.0.0)
+  sinatra-contrib (= 2.0.0)
+  sinatra-router (>= 0.2.4)
   sucker_punch
   webmock (~> 3.5)
 
