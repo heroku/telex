@@ -3,6 +3,7 @@ require_relative './user_finder'
 module Mediators::Messages
   class UserUserFinder < UserFinder
     private
+
     def get_notifiables
       user_response = heroku_client.account_info(user_uuid: target_id)
 

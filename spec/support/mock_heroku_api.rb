@@ -26,10 +26,10 @@ module HerokuAPIMock
     user
   end
 
-  HerokuMockApp = Struct.new(:id)
+  HerokuMockApp = Struct.new(:id, :owner, :collaborators)
 
-  def create_heroku_app(owner:, collaborators: [])
-    app = HerokuMockApp.new(SecureRandom.uuid)
+  def create_heroku_app(owner:, collaborators: [], id: SecureRandom.uuid)
+    app = HerokuMockApp.new(id, owner, collaborators)
     app_response = {
       "name" => "example",
       "owner" => {
@@ -57,6 +57,11 @@ module HerokuAPIMock
       .to_return(body: MultiJson.encode(collab_response))
 
     app
+  end
+
+  # overrides previously declared stubs by recreating the app using the same app id
+  def update_app_collaborators(app, collaborators)
+    create_heroku_app(id: app.id, collaborators: collaborators, owner: app.owner)
   end
 
   def stub_heroku_api_request(method, url, api_key: nil)

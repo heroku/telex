@@ -30,4 +30,13 @@ RSpec.describe Mediators::Followups::Notifier do
     expect(ds.map(&:subject).uniq).to eq([@message.title])
     expect(ds.map(&:in_reply_to).uniq.sort).to eq(["#{@note1.id}@notifications.heroku.com", "#{@note2.id}@notifications.heroku.com"].sort)
   end
+
+  it "does not notify users that have been removed as collabs" do
+    update_app_collaborators(@heroku_app, [@user1])
+    @notifier = described_class.new(followup: @followup)
+    expect(Mediators::Messages::UserUserFinder).to receive(:run).with(target_id: @user1.heroku_id)
+    expect(Mediators::Messages::UserUserFinder).to_not receive(:run).with(target_id: @user2.heroku_id)
+
+    @notifier.call
+  end
 end

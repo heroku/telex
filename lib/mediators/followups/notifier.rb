@@ -4,7 +4,7 @@ module Mediators::Followups
     def initialize(followup: )
       self.followup = followup
       self.message = followup.message
-      self.notifications = message.notifications
+      self.notifications = filter_notifications
     end
 
     def call
@@ -14,10 +14,23 @@ module Mediators::Followups
 
     private
 
+    def heroku_client
+      @client ||= Telex::HerokuClient.new
+    end
+
+    def filter_notifications
+      current_collabs_ids = heroku_client.app_collaborators(message.target_id).map do |c|
+        c["user"]["id"]
+      end
+
+      message.notifications.select do |n|
+        current_collabs_ids.include?(n.user.heroku_id)
+      end
+    end
+
     def update_users
       notifications.each do |note|
-        user = note.user
-        Mediators::Messages::UserUserFinder.run(target_id: user.heroku_id)
+        Mediators::Messages::UserUserFinder.run(target_id: note.user.heroku_id)
       end
     end
 
