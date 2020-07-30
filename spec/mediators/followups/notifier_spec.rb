@@ -1,10 +1,15 @@
 RSpec.describe Mediators::Followups::Notifier do
-  before do
-    allow(Mediators::Messages::UserUserFinder).to receive(:run)
+  include HerokuAPIMock
 
-    @user1, @user2 = 2.times.map { double("user", heroku_id: SecureRandom.uuid, email: Faker::Internet.email) }
+  before do
+    @user1, @user2 = create_heroku_user, create_heroku_user
     @note1, @note2 = [@user1, @user2].map { |u| double("notification", id: SecureRandom.uuid, user: u) }
-    @message = double("message", title: Faker::Company.bs, id: SecureRandom.uuid, notifications: [@note1, @note2])
+    @heroku_app = create_heroku_app(owner: @user1, collaborators: [@user1, @user2])
+    @message = double("message",
+      title: Faker::Company.bs,
+      id: SecureRandom.uuid,
+      notifications: [@note1, @note2],
+      target_id: @heroku_app.id)
     @followup = double("followup", body: Faker::Company.bs, message: @message)
     @notifier = described_class.new(followup: @followup)
   end
