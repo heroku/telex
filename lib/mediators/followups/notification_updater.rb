@@ -12,9 +12,9 @@ module Mediators::Followups
 
     private
 
-    # if there exists collaborators who received the original message, send it to them.
-    # otherwise, send it to all collabs. Sometimes this user may not exist in telex yet,
-    # so we have to create them.
+    # if any collaborators who received the original message are still collabs, send it to just that list minus 
+    # anyone who was removed as a collab. Otherwise, send it to all current collabs. 
+    # Sometimes a user may not exist in telex yet, so have to create them.
     def update_notifications
       if notifications_for_collabs_that_recieved_original_message.any?
         notifications_for_collabs_that_recieved_original_message
