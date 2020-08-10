@@ -12,24 +12,24 @@ module Mediators::Followups
 
     private
 
-    # if any collaborators who received the original message are still collabs, send it to just that list minus 
-    # anyone who was removed as a collab. Otherwise, send it to all current collabs. 
+    # if any collaborators who received the original message are still collabs, send it to just that list minus
+    # anyone who was removed as a collab. Otherwise, send it to all current collabs.
     # Sometimes a user may not exist in telex yet, so have to create them.
     def update_notifications
-      if notifications_for_collabs_that_recieved_original_message.any?
-        notifications_for_collabs_that_recieved_original_message
+      if original_message_recipient_notifications.any?
+        original_message_recipient_notifications
       else
-        create_notifications_for_new_collabs
+        create_notifications_for_all_collabs
       end
     end
 
-    def notifications_for_collabs_that_recieved_original_message
+    def original_message_recipient_notifications
       message.notifications.select do |n|
         current_collab_hids.include?(n.user.heroku_id)
       end
     end
 
-    def create_notifications_for_new_collabs
+    def create_notifications_for_all_collabs
       notifiable_hids = message.notifications.map {|n| n.user.heroku_id }
       new_notifiables = []
 
