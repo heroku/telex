@@ -59,10 +59,12 @@ module HerokuAPIMock
     app
   end
 
-  # If you call create_heroku_app with an existing app id and different owners or collabs
-  # it will rewrite the mocked responses for that app id to reflect the change in ownership or
+  # If you call create_heroku_app with an existing app id and different owners or collabs than
+  # what's already associated with the app, it will rewrite the mocked
+  # responses for that app id to reflect the change in ownership or
   # collaborators.
-  # This method  calls create to rewrite the mocked collab response for a given app,
+
+  # This method calls create to rewrite the mocked collab response for a given app,
   # with the goal of being more obvious that an update is happening, rather than
   # calling create_heroku_app twice in the same test.
   def update_app_collaborators(app, collaborators)
