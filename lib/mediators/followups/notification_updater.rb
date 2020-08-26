@@ -37,16 +37,11 @@ module Mediators::Followups
         if !notifiable_hids.include?(c.user[:heroku_id])
           # not using the notification mediator here because it sends an email,
           # which we also do in this mediator
-          user = find_or_create_user(c.user[:heroku_id], c.user[:email])
-          new_notifiables << Notification.create(notifiable: user, message_id: message.id)
+          new_notifiables << Notification.create(notifiable: c.user, message_id: message.id)
         end
       end
 
       new_notifiables
-    end
-
-    def find_or_create_user(heroku_id, email)
-      User[heroku_id: heroku_id] || User.create(heroku_id: heroku_id, email: email)
     end
 
     def current_collab_hids
