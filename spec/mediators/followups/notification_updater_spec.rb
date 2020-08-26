@@ -12,6 +12,7 @@ RSpec.describe Mediators::Followups::NotificationUpdater do
       title: Faker::Company.bs,
       id: SecureRandom.uuid,
       notifications: [@note1, @note2],
+      target_type: "app",
       target_id: @heroku_app.id)
     followup = double("followup", body: Faker::Company.bs, message: message)
     notifications = described_class.run(followup: followup)
@@ -20,15 +21,21 @@ RSpec.describe Mediators::Followups::NotificationUpdater do
   end
 
   it "creates and returns notifications for all collabs if none received the original message" do
+    owner = Fabricate(:user, email: @user1.email, heroku_id: @user1.heroku_id)
+    note = Fabricate(:notification, user: owner)
     message = Fabricate(:message,
       title: Faker::Company.bs,
-      notifications: [Fabricate(:notification)],
+      notifications: [note],
+      target_type: "app",
       target_id: @heroku_app.id)
 
     followup = double("followup", body: Faker::Company.bs, message: message)
-    user3, user4 = Fabricate(:user), Fabricate(:user)
+    user3, user4 = 2.times.map do
+      huser = create_heroku_user
+      Fabricate(:user, email: huser.email, heroku_id: huser.heroku_id)
+    end
 
-    update_app_collaborators(@heroku_app, [user3, user4])
+    update_app_collaborators(@heroku_app, owner: user3, collaborators: [user3, user4])
     notifications = described_class.run(followup: followup)
     expected = notifications.map(&:user)
 

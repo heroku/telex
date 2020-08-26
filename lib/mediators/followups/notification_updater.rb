@@ -34,10 +34,10 @@ module Mediators::Followups
       new_notifiables = []
 
       current_collabs.each do |c|
-        if !notifiable_hids.include?(c["user"]["id"])
+        if !notifiable_hids.include?(c.user[:heroku_id])
           # not using the notification mediator here because it sends an email,
           # which we also do in this mediator
-          user = find_or_create_user(c["user"]["id"], c["user"]["email"])
+          user = find_or_create_user(c.user[:heroku_id], c.user[:email])
           new_notifiables << Notification.create(notifiable: user, message_id: message.id)
         end
       end
@@ -50,11 +50,11 @@ module Mediators::Followups
     end
 
     def current_collab_hids
-      current_collabs.map {|c| c["user"]["id"] }
+      current_collabs.map {|c| c.user[:heroku_id] }
     end
 
     def current_collabs
-      @current_collabs ||= Telex::HerokuClient.new.app_collaborators(message.target_id)
+      Mediators::Messages::UserFinder.from_message(message).call
     end
   end
 end

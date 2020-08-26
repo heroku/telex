@@ -26,6 +26,28 @@ module HerokuAPIMock
     user
   end
 
+  def create_heroku_team(admins: [])
+    team = HerokuMockUser.new(
+      SecureRandom.uuid,
+      Faker::Internet.email(domain: "herokumananger.com"),
+      SecureRandom.uuid,
+    )
+
+    members_response = admins.map do |admin|
+      {
+        id: admin.heroku_id,
+        email: admin.email,
+        role: "admin",
+      }
+    end
+
+    team_name = team.email.split('@').first
+    stub_heroku_api_request(:get, "#{Config.heroku_api_url}/teams/#{team_name}/members").
+      to_return(body: MultiJson.encode(members_response))
+
+    team
+  end
+
   HerokuMockApp = Struct.new(:id, :owner, :collaborators)
 
   def create_heroku_app(owner:, collaborators: [], id: SecureRandom.uuid)
@@ -67,8 +89,8 @@ module HerokuAPIMock
   # This method calls create to rewrite the mocked collab response for a given app,
   # with the goal of being more obvious that an update is happening, rather than
   # calling create_heroku_app twice in the same test.
-  def update_app_collaborators(app, collaborators)
-    create_heroku_app(id: app.id, collaborators: collaborators, owner: app.owner)
+  def update_app_collaborators(app, collaborators: , owner: app.owner)
+    create_heroku_app(id: app.id, collaborators: collaborators, owner: owner)
   end
 
   def stub_heroku_api_request(method, url, api_key: nil)
