@@ -34,7 +34,7 @@ module Mediators::Followups
       new_notifiables = []
 
       current_collabs.each do |c|
-        if !notifiable_hids.include?(c.user[:heroku_id])
+        if !notifiable_hids.include?(c.user.heroku_id)
           # not using the notification mediator here because it sends an email,
           # which we also do in this mediator
           new_notifiables << Notification.create(notifiable: c.user, message_id: message.id)
@@ -45,7 +45,7 @@ module Mediators::Followups
     end
 
     def current_collab_hids
-      current_collabs.map {|c| c.user[:heroku_id] }
+      current_collabs.map {|c| c.user.heroku_id }
     end
 
     def current_collabs
