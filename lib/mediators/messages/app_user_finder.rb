@@ -25,11 +25,16 @@ module Mediators::Messages
 
     def owners
       owner = extract_user(:owner, app_info.fetch('owner'))
-      if owner[:email].end_with?('@herokumanager.com')
+      if team?(owner[:email])
         team_users(owner[:email])
       else
         [ owner ]
       end
+    end
+
+    def team?(email)
+      email.end_with?('@herokumanager.com') ||
+        Config.deployment == 'staging' && email.end_with?('@staging.herokumanager.com')
     end
 
     def team_users(owner_email)
