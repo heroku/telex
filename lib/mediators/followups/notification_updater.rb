@@ -49,7 +49,7 @@ module Mediators::Followups
     end
 
     def current_collabs
-      Mediators::Messages::UserFinder.from_message(message).call
+      @current_collabs ||= Mediators::Messages::UserFinder.from_message(message).call
     end
   end
 end
