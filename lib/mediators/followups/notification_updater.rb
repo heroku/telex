@@ -45,7 +45,7 @@ module Mediators::Followups
     end
 
     def current_collab_hids
-      @current_collabs ||= current_collabs.map {|c| c.user.heroku_id }
+      @current_collab_hids ||= current_collabs.map {|c| c.user.heroku_id }
     end
 
     def current_collabs
