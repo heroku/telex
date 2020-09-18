@@ -13,6 +13,18 @@ RSpec.describe Endpoints::UserAPI::Notifications do
     end
   end
 
+  describe "PATCH /user/notifications/mark-all-as-read" do
+    it "marks all as read" do
+      unread = Fabricate.times(4, :notification, user: @user, read_at: nil)
+      patch "/notifications/mark-all-as-read"
+      expect(last_response.status).to eq(200)
+      unread.each do |note|
+        note.reload
+        expect(note.read_at).to_not be_nil
+      end
+    end
+  end
+
   describe "PATCH /user/notifications" do
     it "can set read to now" do
       note = Fabricate(:notification, user: @user, read_at: nil)

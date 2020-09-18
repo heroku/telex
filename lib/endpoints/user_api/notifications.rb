@@ -12,6 +12,14 @@ module Endpoints
         end
       end
 
+      patch '/mark-all-as-read' do
+        redis_retry do
+          # note = Mediators::Notifications::ReadStatusUpdater.run(notification: get_note(id), read_status: get_status)
+          updated_count = get_all_notes.update(read_at: DateTime.now)
+          encode({updated: updated_count})
+        end
+      end
+
       patch '/:id' do |id|
         redis_retry do
           note = Mediators::Notifications::ReadStatusUpdater.run(notification: get_note(id), read_status: get_status)
@@ -44,6 +52,10 @@ module Endpoints
 
     def current_user
       Pliny::RequestStore.store.fetch(:current_user)
+    end
+
+    def get_all_notes
+      ::Notification.where(user_id: current_user.id, read_at: nil)
     end
 
     def get_note(id)
