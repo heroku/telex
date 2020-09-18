@@ -18,6 +18,7 @@ RSpec.describe Endpoints::UserAPI::Notifications do
       unread = Fabricate.times(4, :notification, user: @user, read_at: nil)
       patch "/notifications/mark-all-as-read"
       expect(last_response.status).to eq(200)
+      expect(last_response.body).to eq(MultiJson.dump(updated: unread.count))
       unread.each do |note|
         note.reload
         expect(note.read_at).to_not be_nil
