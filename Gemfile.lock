@@ -106,7 +106,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    redcarpet (3.4.0)
+    redcarpet (3.5.1)
     redis (4.1.2)
     rollbar (2.22.1)
     rollbar-blanket (1.0.0)
@@ -193,7 +193,7 @@ DEPENDENCIES
   rack-test (>= 1.1.0)
   rack-timeout (~> 0.4)
   rake
-  redcarpet
+  redcarpet (>= 3.5.1)
   rollbar
   rollbar-blanket (~> 1.0.0)!
   rspec
