@@ -1,6 +1,11 @@
 GEM
-  remote: https://rubygems.org/
   remote: https://packagecloud.io/heroku/gemgate/
+  specs:
+    blacklist_hash (2.0.0)
+    rollbar-blanket (1.0.0)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     activesupport (5.2.4.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -10,7 +15,6 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     backports (3.17.2)
-    blacklist_hash (2.0.0)
     byebug (11.0.1)
     clockwork (2.0.3)
       tzinfo
@@ -109,7 +113,6 @@ GEM
     redcarpet (3.5.1)
     redis (4.1.2)
     rollbar (2.22.1)
-    rollbar-blanket (1.0.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -211,4 +214,4 @@ RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.1.4
+   2.2.14
