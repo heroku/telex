@@ -43,7 +43,7 @@ end
 group :test do
   gem "addressable"
   gem "committee", ">= 3.0.1"
-  gem "database_cleaner"
+  gem "database_cleaner-sequel"
   gem "fabrication"
   gem "faker"
   gem "guard-rspec"
