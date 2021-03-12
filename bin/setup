@@ -4,7 +4,12 @@ function main {
   set -e
 
   add_new_env_vars
-  bundle install --local
+
+  bundle config --local specific_platform true
+  bundle config --local cache_all true
+  bundle config --local cache_all_platforms true
+  bundle check > /dev/null || bundle install --local
+
   bin/rake db:setup db:migrate
 }
 

@@ -1,4 +1,6 @@
+.bundle
 .env
 notes*
 tags
+tmp
 /spec/failures.txt
