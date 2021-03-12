@@ -15,7 +15,7 @@ module Config
   mandatory :heroku_api_url
   mandatory :mailgun_smtp_login
   mandatory :mailgun_smtp_password
-  mandatory :mailgun_smtp_port,      int
+  mandatory :mailgun_smtp_port, int
   mandatory :mailgun_smtp_server
 
   # Optional -- value is returned or `nil` if it wasn't present.
@@ -27,19 +27,20 @@ module Config
   optional :database_log_level
 
   # Override -- value is returned or the set default
-  override :cache_user_auth,  true,  bool
-  override :database_timeout, 10,    int
-  override :db_pool,          5,     int
-  override :force_ssl,        true,  bool
-  override :port,             5000,  int
-  override :pretty_json,      false, bool
-  override :puma_max_threads, 16,    int
-  override :puma_min_threads, 1,     int
-  override :puma_workers,     3,     int
-  override :rack_env,         'development', string
-  override :raise_errors,     false, bool
-  override :root,             File.expand_path("../../", __FILE__), string
-  override :timeout,          45,    int
-  override :versioning,       false, bool
+  override :cache_user_auth, true, bool
+  override :database_timeout, 10, int
+  override :db_pool, 5, int
+  override :force_ssl, true, bool
+  override :metric_source, "telex.local", string
+  override :port, 5000, int
+  override :pretty_json, false, bool
+  override :puma_max_threads, 16, int
+  override :puma_min_threads, 1, int
+  override :puma_workers, 3, int
+  override :rack_env, "development", string
+  override :raise_errors, false, bool
+  override :root, File.expand_path("../../", __FILE__), string
+  override :timeout, 45, int
+  override :versioning, false, bool
   override :users_endpoint_authorized_producers, "", array
 end
