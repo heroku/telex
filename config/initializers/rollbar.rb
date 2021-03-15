@@ -14,5 +14,7 @@ unless Config.rack_env == 'test'
     config.exception_level_filters.merge!(
       'Telex::Emailer::DeliveryError' => 'warning'
     )
+
+    config.use_sidekiq
   end
 end
