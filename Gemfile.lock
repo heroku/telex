@@ -207,10 +207,10 @@ DEPENDENCIES
   sinatra-contrib (~> 2.0)
   sinatra-router (>= 0.2.4)
   sucker_punch
-  webmock (~> 3.5)
+  webmock (~> 3.12, >= 3.12.1)
 
 RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.1.4
+   2.2.16
