@@ -138,7 +138,7 @@ GEM
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
       rspec-mocks (~> 3.10.0)
-    sequel (4.49.0)
+    sequel (5.43.0)
     sequel-paranoid (0.7.0)
       sequel
     sequel_pg (1.14.0)
@@ -202,7 +202,7 @@ DEPENDENCIES
   rollbar
   rollbar-blanket (~> 1.0.0)!
   rspec
-  sequel (~> 4.30)
+  sequel (~> 5.9)
   sequel-paranoid
   sequel_pg
   sidekiq (>= 5.2.5)
@@ -213,7 +213,7 @@ DEPENDENCIES
   webmock (~> 3.12, >= 3.12.1)
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.7.3p183
 
 BUNDLED WITH
    2.2.16

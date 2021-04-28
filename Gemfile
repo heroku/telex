@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "2.6.6"
+ruby "2.7.3"
 
 gem "clockwork"
 gem "erubis"
@@ -18,7 +18,7 @@ gem "rack-timeout", "~> 0.4"
 gem "rake"
 gem "redcarpet", ">= 3.5.1"
 gem "rollbar"
-gem "sequel", "~> 4.30"
+gem "sequel", "~> 5.9"
 gem "sequel-paranoid"
 gem "sequel_pg", require: "sequel"
 gem "sidekiq", ">= 5.2.5"
