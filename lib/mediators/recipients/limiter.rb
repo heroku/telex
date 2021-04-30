@@ -28,10 +28,11 @@ module Mediators::Recipients
       end
     end
 
-  private
+    private
+
     def created_today
-      Recipient.where("app_id = ? and ? <= created_at and created_at < ?",
-                      app_info.fetch("id"), today, tomorrow)
+      Recipient.where(Sequel.lit("app_id = ? and ? <= created_at and created_at < ?",
+                      app_info.fetch("id"), today, tomorrow))
     end
 
     def today

@@ -16,7 +16,7 @@ RSpec.describe Mediators::Recipients::Limiter do
     end
 
     it "does not raise an error when no limit is hit" do
-      @limiter.call
+      expect { @limiter.call }.not_to raise_error
     end
 
     it "raises LimitError with a limit hit" do
