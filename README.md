@@ -90,4 +90,5 @@ Refer to [our internal guide on Telex](https://github.com/heroku/engineering-doc
 [Code Quality](https://codeclimate.com/repos/53ebf597e30ba01158015b7a) |
 Charts: [Prod](https://metrics.librato.com/s/spaces/54073) / [Staging](https://metrics.librato.com/s/spaces/54074) |
 [Logs](https://splunk.herokai.com/en-US/app/search/search/?q=search%20index%3Dmain%20app%3Dtelex) |
+[Logs](https://splunk.herokai.com/en-US/app/search/search/?q=search%20index%3A%3Amain%20component%3A%3Atelex%20stage%3A%3Aproduction)
 [Herokai Dashboards](https://dashboards.herokai.com)
