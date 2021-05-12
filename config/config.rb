@@ -43,4 +43,5 @@ module Config
   override :timeout, 45, int
   override :versioning, false, bool
   override :users_endpoint_authorized_producers, "", array
+  override :cleanup_job_timeout, "15min", string
 end
