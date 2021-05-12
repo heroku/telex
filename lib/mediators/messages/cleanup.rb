@@ -7,6 +7,8 @@ module Mediators::Messages
     def call
       db = Sequel::Model.db
       db.transaction do
+        # This takes a long time, so up the timeout for just this transaction:
+        db["SET LOCAL statement_timeout = '15min'"].all
         db["DELETE FROM followups
               USING messages
               WHERE messages.id=followups.message_id
