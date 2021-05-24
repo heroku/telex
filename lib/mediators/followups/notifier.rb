@@ -3,7 +3,6 @@ module Mediators::Followups
     attr_accessor :followup, :message, :notifications
     def initialize(followup:)
       self.followup = followup
-      self.message = followup.message
       self.notifications = Mediators::Followups::NotificationUpdater.run(
         followup: followup
       )
@@ -24,14 +23,7 @@ module Mediators::Followups
 
     def notify_users
       notifications.each do |note|
-        user = note.user
-        emailer = Telex::Emailer.new(
-          email: user.email,
-          in_reply_to: note.id,
-          subject: message.title,
-          body: followup.body
-        )
-        emailer.deliver!
+        Jobs::SendNotificationEmail.perform_async(note.id, followup.id)
       end
     end
   end
