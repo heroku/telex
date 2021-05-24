@@ -4,7 +4,7 @@ require "redcarpet/render_strip"
 require "mail"
 
 class Telex::Emailer
-  HTML_TEMPLATE = File.read(File.expand_path("../../templates/email.html.erb", __FILE__))
+  HTML_TEMPLATE = File.read(File.expand_path("../../templates/email.html.erb", __FILE__)).freeze
 
   class DeliveryError < StandardError; end
 
