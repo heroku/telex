@@ -5,7 +5,7 @@ module Mediators::Recipients
     def initialize(app_info:, recipient:, template: nil, active: false)
       @app_info = app_info
       @recipient = recipient
-      @active = active      
+      @active = active
 
       if template
         @title, @body = TemplateFinder.run(template: template)
@@ -29,9 +29,9 @@ module Mediators::Recipients
     end
 
     def maybe_regenerate_token(title:, body:)
-      return {} unless regenerate_token? 
+      return {} unless regenerate_token?
 
-      { verification_token: Recipient.generate_token, verification_sent_at: Time.now.utc }
+      {verification_token: Recipient.generate_token, verification_sent_at: Time.now.utc}
     end
 
     def regenerate_token?

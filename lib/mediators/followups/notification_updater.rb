@@ -30,7 +30,7 @@ module Mediators::Followups
     end
 
     def create_notifications_for_all_collabs
-      notifiable_hids = message.notifications.map {|n| n.user.heroku_id }
+      notifiable_hids = message.notifications.map { |n| n.user.heroku_id }
       new_notifiables = []
 
       current_collabs.each do |c|
@@ -45,7 +45,7 @@ module Mediators::Followups
     end
 
     def current_collab_hids
-      @current_collab_hids ||= current_collabs.map {|c| c.user.heroku_id }
+      @current_collab_hids ||= current_collabs.map { |c| c.user.heroku_id }
     end
 
     def current_collabs

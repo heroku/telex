@@ -14,7 +14,7 @@ module Telex
       value = options[:value] || 1
 
       # like: count.prefix.name1=val1 count.prefix.name2=val2
-      measures = Hash[names.map { |n| ["count##{prefix}.#{n}", value] }]
+      measures = names.map { |n| ["count##{prefix}.#{n}", value] }.to_h
       Pliny.log(measures)
 
       nil
@@ -38,7 +38,7 @@ module Telex
       display = units ? "#{value}#{units}" : value
 
       # like: measure.prefix.name1=val1 measure.prefix.name2=val2
-      measures = Hash[names.map { |n| ["measure##{prefix}.#{n}", display] }]
+      measures = names.map { |n| ["measure##{prefix}.#{n}", display] }.to_h
       Pliny.log(measures)
 
       return_value
@@ -61,13 +61,13 @@ module Telex
       display = units ? "#{value}#{units}" : value
 
       # like: sample.prefix.name1=val1 sample.prefix.name2=val2
-      measures = Hash[names.map { |n| ["sample##{prefix}.#{n}", display] }]
+      measures = names.map { |n| ["sample##{prefix}.#{n}", display] }.to_h
       Pliny.log(measures)
 
       # like: source=heroku.com measure.api.name1=val1 measure.api.name2=val2
-    # measures = Hash[names.map { |n| ["measure.api.#{n}", display] }]
-    # measures['source'] = Utils.heroku_domain
-    # API.log(measures)
+      # measures = Hash[names.map { |n| ["measure.api.#{n}", display] }]
+      # measures['source'] = Utils.heroku_domain
+      # API.log(measures)
 
       nil
     end
@@ -75,7 +75,7 @@ module Telex
     private
 
     def self.prefix
-      @@prefix ||= "telex.#{Config.console_banner || 'production'}"
+      @@prefix ||= "telex.#{Config.console_banner || "production"}"
     end
 
     def self.time(&block)

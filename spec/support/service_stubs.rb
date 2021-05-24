@@ -1,6 +1,6 @@
 class HerokuApiStub < Sinatra::Base
-  APP_ID     = SecureRandom.uuid
-  OWNER_ID   = SecureRandom.uuid
+  APP_ID = SecureRandom.uuid
+  OWNER_ID = SecureRandom.uuid
   COLLAB1_ID = SecureRandom.uuid
   COLLAB2_ID = SecureRandom.uuid
 
@@ -46,7 +46,7 @@ class HerokuApiStub < Sinatra::Base
       id: APP_ID,
       owner: {
         id: OWNER_ID,
-        email: "username@example.com",
+        email: "username@example.com"
       }
     )
   end
@@ -57,22 +57,22 @@ class HerokuApiStub < Sinatra::Base
         id: SecureRandom.uuid,
         user: {
           id: COLLAB1_ID,
-          email: "username2@example.com",
-        },
+          email: "username2@example.com"
+        }
       },
       {
         id: SecureRandom.uuid,
         user: {
           id: COLLAB2_ID,
-          email: "username3@example.com",
-        },
-      },
+          email: "username3@example.com"
+        }
+      }
     ])
   end
 
   put "/users/~/capabilities" do
     MultiJson.encode({
-      "capabilities" => [{"capable" => true}],
+      "capabilities" => [{"capable" => true}]
     })
   end
 end

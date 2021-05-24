@@ -7,7 +7,7 @@ class Recipient < Sequel::Model
   plugin :validation_helpers
 
   def self.find_active_by_app_id(app_id:)
-    self.where(app_id: app_id, active: true, verified: true, deleted_at: nil)
+    where(app_id: app_id, active: true, verified: true, deleted_at: nil)
   end
 
   def valid_token?(token)
@@ -15,12 +15,12 @@ class Recipient < Sequel::Model
   end
 
   def self.generate_token
-    SecureRandom.hex(3)[0,5].upcase
+    SecureRandom.hex(3)[0, 5].upcase
   end
 
   def validate
     super
-    validates_presence %i(app_id email)
+    validates_presence %i[app_id email]
     validates_format EMAIL, :email
   end
 

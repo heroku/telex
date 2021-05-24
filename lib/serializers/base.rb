@@ -3,7 +3,7 @@ class Serializers
     @@structures = {}
 
     def self.structure(type, &blk)
-      @@structures["#{self.name}::#{type}"] = blk
+      @@structures["#{name}::#{type}"] = blk
     end
 
     def initialize(type)
@@ -11,7 +11,7 @@ class Serializers
     end
 
     def serialize(object)
-      object.respond_to?(:map) ? object.map{|item| serializer.call(item)} : serializer.call(object)
+      object.respond_to?(:map) ? object.map { |item| serializer.call(item) } : serializer.call(object)
     end
 
     private
@@ -24,6 +24,5 @@ class Serializers
     def serializer
       @@structures["#{self.class.name}::#{@type}"]
     end
-
   end
 end

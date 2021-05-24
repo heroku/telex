@@ -34,7 +34,7 @@ RSpec.describe Endpoints::AppAPI::Recipients do
       "{}",
       "",
       '{"email":""}',
-      '{"email":"foo@example.com"}',
+      '{"email":"foo@example.com"}'
     ]
 
     Mediators::Recipients::TemplateFinder.setup(template: "alerting", title: "hello", body: "%{app} %{token}") do

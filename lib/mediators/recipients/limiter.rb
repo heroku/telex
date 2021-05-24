@@ -32,7 +32,7 @@ module Mediators::Recipients
 
     def created_today
       Recipient.where(Sequel.lit("app_id = ? and ? <= created_at and created_at < ?",
-                      app_info.fetch("id"), today, tomorrow))
+        app_info.fetch("id"), today, tomorrow))
     end
 
     def today
@@ -40,7 +40,7 @@ module Mediators::Recipients
     end
 
     def tomorrow
-      (Time.now.utc+86400).strftime("%Y-%m-%d")
+      (Time.now.utc + 86400).strftime("%Y-%m-%d")
     end
   end
 end

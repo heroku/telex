@@ -20,7 +20,7 @@ RSpec.describe Endpoints::ProducerAPI::Messages do
     @message_body = {
       title: Faker::Company.bs,
       body: Faker::Company.bs,
-      target: {type: "app", id: heroku_app.id},
+      target: {type: "app", id: heroku_app.id}
     }
   end
 

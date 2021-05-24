@@ -3,7 +3,7 @@ module Mediators::Recipients
     attr_reader :app_info
 
     def initialize(app_info:)
-      @app_info = app_info      
+      @app_info = app_info
     end
 
     def call

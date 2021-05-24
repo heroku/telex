@@ -10,7 +10,7 @@ Sequel.migration do
 
     alter_table(:notifications) do
       add_index [:user_id, :message_id], unique: true
-      add_foreign_key [:user_id],    :users
+      add_foreign_key [:user_id], :users
       add_foreign_key [:message_id], :messages
     end
 

@@ -1,4 +1,4 @@
-require 'openssl'
+require "openssl"
 
 module Telex::ApiKey
   extend self
@@ -15,7 +15,7 @@ module Telex::ApiKey
 
   def time_constant_compare(a, b)
     check = a.bytesize ^ b.bytesize
-    a.bytes.zip(b.bytes) { |x,y| check |= x^y }
+    a.bytes.zip(b.bytes) { |x, y| check |= x ^ y }
     check == 0
   end
 end

@@ -2,7 +2,7 @@ RSpec.describe Mediators::Recipients::Limiter do
   before do
     @app_info = {
       "id" => SecureRandom.uuid,
-      "name" => "brat",
+      "name" => "brat"
     }
     @limiter = described_class.new(app_info: @app_info,
                                    max_per_day: 1,

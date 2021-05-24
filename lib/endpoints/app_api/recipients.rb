@@ -20,7 +20,7 @@ module Endpoints
           recipient = Mediators::Recipients::Creator.run(
             app_info: @app_info,
             email: data.fetch("email", ""),
-            template: data.fetch("template", ""),
+            template: data.fetch("template", "")
           )
           status 201
           respond_json(recipient)
@@ -30,7 +30,7 @@ module Endpoints
       put "/recipients/:id/verify" do
         Mediators::Recipients::Verifier.run(
           recipient: get_recipient,
-          token: data.fetch("token", ""),
+          token: data.fetch("token", "")
         )
         status 204
       end
@@ -40,7 +40,7 @@ module Endpoints
           app_info: @app_info,
           recipient: get_recipient,
           active: data.fetch("active", false),
-          template: data.fetch("template", ""),
+          template: data.fetch("template", "")
         )
         respond_json(recipient)
       end
@@ -52,7 +52,8 @@ module Endpoints
         status 204
       end
 
-    private
+      private
+
       def authorized!
         halt 403 unless authorized?
       end
@@ -71,8 +72,8 @@ module Endpoints
       end
 
       def get_recipient
-        raise Pliny::Errors::UnprocessableEntity unless params[:app_id] =~ Pliny::Middleware::RequestID::UUID_PATTERN
-        raise Pliny::Errors::UnprocessableEntity unless (params[:id]) =~ Pliny::Middleware::RequestID::UUID_PATTERN
+        raise Pliny::Errors::UnprocessableEntity unless Pliny::Middleware::RequestID::UUID_PATTERN.match?(params[:app_id])
+        raise Pliny::Errors::UnprocessableEntity unless Pliny::Middleware::RequestID::UUID_PATTERN.match?((params[:id]))
 
         Recipient[app_id: params[:app_id], id: params[:id], deleted_at: nil] || raise(Pliny::Errors::NotFound)
       end

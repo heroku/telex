@@ -7,14 +7,12 @@ module Mediators::Recipients
     end
 
     def call
-      begin
-        @title = ENV.fetch(KEY % [@template, "TITLE"])
-        @body  = ENV.fetch(KEY % [@template, "BODY"])
-      rescue KeyError
-        raise Mediators::Recipients::NotFound
-      else
-        return @title, @body
-      end
+      @title = ENV.fetch(KEY % [@template, "TITLE"])
+      @body = ENV.fetch(KEY % [@template, "BODY"])
+    rescue KeyError
+      raise Mediators::Recipients::NotFound
+    else
+      [@title, @body]
     end
   end
 end

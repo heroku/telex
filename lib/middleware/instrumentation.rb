@@ -11,7 +11,7 @@ module Middleware
 
       Telex::Sample.count "requests"
       Telex::Sample.count "requests.#{status}"
-      Telex::Sample.count "requests.#{status/10}x"
+      Telex::Sample.count "requests.#{status / 10}x"
       Telex::Sample.measure "requests.latency", value: elapsed, unit: "s"
 
       [status, headers, response]

@@ -1,6 +1,6 @@
 module Mediators::Messages
   class Cleanup < Mediators::Base
-    def initialize(options=nil)
+    def initialize(options = nil)
       # required by Mediator api
     end
 

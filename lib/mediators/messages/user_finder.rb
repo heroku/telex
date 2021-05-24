@@ -26,9 +26,12 @@ module Mediators::Messages
     end
 
     private
+
     attr_accessor :users_details
 
-    def get_notifiables  ; raise NotImplementedError end
+    def get_notifiables
+      raise NotImplementedError
+    end
 
     def heroku_client
       Telex::HerokuClient.new
@@ -53,10 +56,9 @@ module Mediators::Messages
     end
 
     def extract_user(role, response)
-      { role: role,
-        email: response.fetch('email'),
-        hid: response.fetch('id')
-      }
+      {role: role,
+       email: response.fetch("email"),
+       hid: response.fetch("id")}
     end
   end
 end

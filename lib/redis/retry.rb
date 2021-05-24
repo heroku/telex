@@ -5,14 +5,13 @@ class Redis
     class Error < StandardError; end
 
     def redis_retry(**opts, &block)
-      opts[:attempts]    ||= 0
+      opts[:attempts] ||= 0
       opts[:finish_time] ||= retry_window.seconds.from_now
       log(opts[:attempts]) if opts[:attempts] > 0
 
       yield.tap do
         log(opts[:attempts], successful: true)
       end
-
     rescue Redis::BaseConnectionError
       opts[:attempts] += 1
 

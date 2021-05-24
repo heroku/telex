@@ -2,11 +2,11 @@ module Endpoints
   class ProducerAPI::Users < Base
     namespace "/apps/:app_id/users" do
       before do
-        unless params[:app_id] =~ Pliny::Middleware::RequestID::UUID_PATTERN
+        unless Pliny::Middleware::RequestID::UUID_PATTERN.match?(params[:app_id])
           raise Pliny::Errors::UnprocessableEntity
         end
         authorized!
-        content_type :json, charset: 'utf-8'
+        content_type :json, charset: "utf-8"
       end
 
       get do
@@ -15,6 +15,7 @@ module Endpoints
       end
 
       private
+
       def authorized!
         halt 403 unless authorized?
       end

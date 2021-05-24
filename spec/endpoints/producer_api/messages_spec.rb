@@ -23,7 +23,7 @@ RSpec.describe Endpoints::ProducerAPI::Messages do
         title: "Congratulations",
         body: "You are a winner",
         action: {url: "https://foo", label: "Redeem prize!"},
-        target: {type: "user", id: SecureRandom.uuid},
+        target: {type: "user", id: SecureRandom.uuid}
       }
     end
 
@@ -78,7 +78,7 @@ RSpec.describe Endpoints::ProducerAPI::Messages do
     before do
       @message = Fabricate(:message, producer: @producer)
       @followup_body = {
-        body: "You actually are not a winner :(",
+        body: "You actually are not a winner :("
       }
     end
 

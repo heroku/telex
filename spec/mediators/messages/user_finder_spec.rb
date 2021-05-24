@@ -91,7 +91,7 @@ RSpec.describe AppUserFinder, "#call" do
     @id = SecureRandom.uuid
     @finder = AppUserFinder.new(target_id: @id)
 
-    @owner_id   = HerokuApiStub::OWNER_ID
+    @owner_id = HerokuApiStub::OWNER_ID
     @collab1_id = HerokuApiStub::COLLAB1_ID
     @collab2_id = HerokuApiStub::COLLAB2_ID
 
@@ -99,7 +99,7 @@ RSpec.describe AppUserFinder, "#call" do
   end
 
   it "creates users locally if needed" do
-    expect(User[heroku_id: @owner_id]).to   be_nil
+    expect(User[heroku_id: @owner_id]).to be_nil
     expect(User[heroku_id: @collab1_id]).to be_nil
     expect(User[heroku_id: @collab2_id]).to be_nil
     @finder.call
@@ -135,7 +135,7 @@ RSpec.describe AppUserFinder, "#call" do
           name: "example",
           owner: {
             id: SecureRandom.uuid,
-            email: "team@herokumanager.com",
+            email: "team@herokumanager.com"
           }
         )
       end
@@ -146,23 +146,23 @@ RSpec.describe AppUserFinder, "#call" do
             role: "admin",
             user: {
               id: SecureRandom.uuid,
-              email: "someone@example.com",
-            },
+              email: "someone@example.com"
+            }
           },
           {
             role: "admin",
             user: {
               id: SecureRandom.uuid,
-              email: "username2@example.com",
-            },
+              email: "username2@example.com"
+            }
           },
           {
             role: "member",
             user: {
               id: SecureRandom.uuid,
-              email: "member@example.com",
-            },
-          },
+              email: "member@example.com"
+            }
+          }
         ])
       end
     end
@@ -222,7 +222,7 @@ RSpec.describe AppUserFinder, "#call" do
           name: "example",
           owner: {
             id: SecureRandom.uuid,
-            email: "team@herokumanager.com",
+            email: "team@herokumanager.com"
           }
         )
       end

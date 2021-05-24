@@ -6,6 +6,6 @@ class Followup < Sequel::Model
 
   def validate
     super
-    validates_presence %i(message_id body)
+    validates_presence %i[message_id body]
   end
 end

@@ -2,7 +2,7 @@ RSpec.describe Mediators::Recipients::Creator do
   before do
     @app_info = {
       "id" => SecureRandom.uuid,
-      "name" => "brat",
+      "name" => "brat"
     }
   end
 
@@ -14,7 +14,7 @@ RSpec.describe Mediators::Recipients::Creator do
 
       allow(Mediators::Recipients::Emailer).to receive(:run).with(
         app_info: @app_info, recipient: kind_of(Recipient),
-        template: "alerting",
+        template: "alerting"
       )
 
       result = nil

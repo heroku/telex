@@ -21,6 +21,7 @@ module Mediators::Notifications
     end
 
     private
+
     attr_accessor :notifiable, :message, :notification
 
     def send_email
@@ -29,11 +30,9 @@ module Mediators::Notifications
         notification_id: notification.id,
         subject: message.title,
         body: message.body,
-        action: message.action,
+        action: message.action
       )
       emailer.deliver!
     end
-
   end
 end
-
