@@ -1,4 +1,4 @@
-require_relative '../redis/retry'
+require_relative "../redis/retry"
 
 module Endpoints
   # The base class for all Sinatra-based endpoints. Use sparingly.
@@ -54,7 +54,7 @@ module Endpoints
     private
 
     def sinatra_error
-      env['sinatra.error']
+      env["sinatra.error"]
     end
   end
 end

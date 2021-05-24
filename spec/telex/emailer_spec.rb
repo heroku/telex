@@ -28,7 +28,7 @@ RSpec.describe Telex::Emailer do
   it "strips down plain text accordingly given :strip_text" do
     cases = [
       [false, "hello __world__ [here](https://heroku.com/)"],
-      [true, "hello world here (https://heroku.com/)"],
+      [true, "hello world here (https://heroku.com/)"]
     ]
 
     cases.each do |strip_text, expected_body|

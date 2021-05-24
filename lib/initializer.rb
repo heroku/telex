@@ -13,7 +13,7 @@ module Initializer
   end
 
   def self.require_lib
-    require! %w(
+    require! %w[
       lib/telex/**/*
       lib/serializers/base
       lib/serializers/**/*
@@ -24,13 +24,13 @@ module Initializer
       lib/middleware/**/*
       lib/routes
       lib/jobs/**/*
-    )
+    ]
   end
 
   def self.require_models
-    require! %w(
+    require! %w[
       lib/models/**/*
-    )
+    ]
   end
 
   def self.require_initializers

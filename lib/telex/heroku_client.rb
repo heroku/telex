@@ -1,9 +1,9 @@
-require 'uri'
+require "uri"
 module Telex
   class HerokuClient
-
     class BadResponse < StandardError; end
-    class NotFound < StandardError ; end
+
+    class NotFound < StandardError; end
 
     attr_accessor :uri
     private :uri=
@@ -30,19 +30,20 @@ module Telex
         "capabilities" => [
           "capability" => capability,
           "resource_id" => id,
-          "resource_type" => type,
+          "resource_type" => type
         ]
       }
       response = put(
         "/users/~/capabilities",
         variant: ".capabilities",
         base_headers_only: base_headers_only,
-        body: body.to_json)
+        body: body.to_json
+      )
 
-      raise BadResponse unless response["capabilities"].kind_of?(Array)
-      raise BadResponse unless response["capabilities"][0].kind_of?(Hash)
+      raise BadResponse unless response["capabilities"].is_a?(Array)
+      raise BadResponse unless response["capabilities"][0].is_a?(Hash)
 
-      return response["capabilities"][0]["capable"]
+      response["capabilities"][0]["capable"]
     end
 
     def app_info(app_uuid, base_headers_only: false)
@@ -67,10 +68,10 @@ module Telex
       range = "id ..; max=1000;" if range.nil?
 
       base = {
-        "Accept"             => "application/vnd.heroku+json; version=3#{variant}",
-        "User-Agent"         => "telex",
+        "Accept" => "application/vnd.heroku+json; version=3#{variant}",
+        "User-Agent" => "telex",
         "X-Heroku-Requester" => "Telex",
-        "Range"              => range
+        "Range" => range
       }
 
       request_id = Pliny::RequestStore.store[:request_id]
@@ -87,21 +88,22 @@ module Telex
       return {} unless Config.additional_api_headers
       template = MultiJson.decode(Config.additional_api_headers)
       if user
-        Hash[template.map {|(k,v)| [k,v.sub('{{user}}', user)] }]
+        template.map { |(k, v)| [k, v.sub("{{user}}", user)] }.to_h
       else
-        template.reject {|k,v| v == '{{user}}'}
+        template.reject { |k, v| v == "{{user}}" }
       end
     end
 
-    def get(path, options={})
+    def get(path, options = {})
       response = client.get(
         expects: [200, 206],
         headers: headers(options),
-        path:    path)
+        path: path
+      )
       content = MultiJson.decode(response.body)
 
       if more_data? response
-        opts = {range: response.headers['Next-Range'] }.merge(options)
+        opts = {range: response.headers["Next-Range"]}.merge(options)
         content.concat get(path, opts)
       end
 
@@ -110,12 +112,13 @@ module Telex
       handle_error(err)
     end
 
-    def put(path, options={})
+    def put(path, options = {})
       response = client.put(
         expects: [200, 206],
         body: options.delete(:body),
         headers: headers(options),
-        path:    path)
+        path: path
+      )
 
       MultiJson.decode(response.body)
     rescue => err
@@ -123,7 +126,7 @@ module Telex
     end
 
     def more_data?(response)
-      response.status == 206 && response.headers.key?('Next-Range')
+      response.status == 206 && response.headers.key?("Next-Range")
     end
 
     def handle_error(error)

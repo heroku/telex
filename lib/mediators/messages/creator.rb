@@ -1,6 +1,5 @@
 module Mediators::Messages
   class Creator < Mediators::Base
-
     APP = "{{app}}"
 
     def initialize(producer:, title:, body:, action_label:, action_url:, target_type:, target_id:)

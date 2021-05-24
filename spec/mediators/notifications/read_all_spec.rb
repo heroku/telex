@@ -1,5 +1,4 @@
 RSpec.describe Mediators::Notifications::ReadAll, "#call" do
-
   let(:mediator) { described_class.new(user: user) }
   let(:user) { Fabricate(:user) }
 

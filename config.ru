@@ -1,5 +1,5 @@
-require_relative 'lib/application'
+require_relative "lib/application"
 
-$stdout.sync = (Config.deployment != 'production')
+$stdout.sync = (Config.deployment != "production")
 
 run Routes

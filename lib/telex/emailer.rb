@@ -1,14 +1,14 @@
-require 'erubis'
-require 'redcarpet'
-require 'redcarpet/render_strip'
-require 'mail'
+require "erubis"
+require "redcarpet"
+require "redcarpet/render_strip"
+require "mail"
 
 class Telex::Emailer
-  HTML_TEMPLATE = File.read(File.expand_path('../../templates/email.html.erb', __FILE__))
+  HTML_TEMPLATE = File.read(File.expand_path("../../templates/email.html.erb", __FILE__))
 
-  class DeliveryError < StandardError ; end
+  class DeliveryError < StandardError; end
 
-  def initialize(email:, notification_id: nil, in_reply_to: nil, subject:, body:, action: nil, from: nil, strip_text: false)
+  def initialize(email:, subject:, body:, notification_id: nil, in_reply_to: nil, action: nil, from: nil, strip_text: false)
     self.email = email
     self.notification_id = notification_id
     self.in_reply_to = in_reply_to
@@ -21,8 +21,8 @@ class Telex::Emailer
 
   def deliver!
     mail = Mail.new
-    mail.to      = email
-    mail.from    = from || 'Heroku Notifications <bot@notifications.heroku.com>'
+    mail.to = email
+    mail.from = from || "Heroku Notifications <bot@notifications.heroku.com>"
     mail.subject = subject
     if notification_id
       mail.message_id = "<#{notification_id}@notifications.heroku.com>"
@@ -31,12 +31,12 @@ class Telex::Emailer
     end
 
     text_part = Mail::Part.new
-    text_part.content_type = 'text/plain; charset=UTF-8'
+    text_part.content_type = "text/plain; charset=UTF-8"
     text_part.body = body
     mail.text_part = strip_text ? generate_text : text_part
 
     html_part = Mail::Part.new
-    html_part.content_type = 'text/html; charset=UTF-8'
+    html_part.content_type = "text/html; charset=UTF-8"
     html_part.body = generate_html
     mail.html_part = html_part
 
@@ -47,16 +47,17 @@ class Telex::Emailer
     # Mail just 'splodes and sends everything up
     Telex::Sample.count "email_error"
     Pliny.log(
-      email_error:     true,
-      error:           e.class,
-      to:              email,
-      from:            from,
+      email_error: true,
+      error: e.class,
+      to: email,
+      from: from,
       notification_id: notification_id
     )
     raise DeliveryError.new(e.message)
   end
 
   private
+
   attr_accessor :email, :notification_id, :subject, :body, :in_reply_to, :action, :from, :strip_text
 
   def generate_text
@@ -78,16 +79,17 @@ class Telex::Emailer
     Erubis::Eruby.new(HTML_TEMPLATE).result(
       body: rendered_body,
       png_url: png_url,
-      email_action_ld: email_action_ld)
+      email_action_ld: email_action_ld
+    )
   end
 
   def png_url
     id = notification_id || in_reply_to
     return nil unless id
 
-    if Config.deployment == 'production'
+    if Config.deployment == "production"
       "https://telex.heroku.com/user/notifications/#{id}/read.png"
-    elsif Config.deployment == 'staging'
+    elsif Config.deployment == "staging"
       "https://telex-staging.herokuapp.com/user/notifications/#{id}/read.png"
     end
   end
@@ -117,16 +119,16 @@ end
 #         # block-level calls
 #         :block_code, :block_quote,
 #         :block_html, :list, :list_item,
-# 
+#
 #         # span-level calls
 #         :autolink, :codespan, :double_emphasis,
 #         :emphasis, :underline, :raw_html,
 #         :triple_emphasis, :strikethrough,
 #         :superscript, :highlight,
-# 
+#
 #         # footnotes
 #         :footnotes, :footnote_def, :footnote_ref,
-# 
+#
 #         # low level rendering
 #         :entity, :normal_text
 #       ].each do |method|
@@ -134,33 +136,33 @@ end
 #           args.first
 #         end
 #       end
-# 
+#
 #       # Other methods where we don't return only a specific argument
 #       def link(link, title, content)
 #         "#{content} (#{link})"
 #       end
-# 
+#
 #       def image(link, title, content)
 #         content &&= content + " "
 #         "#{content}#{link}"
 #       end
-# 
+#
 #       def paragraph(text)
 #         text + "\\n"
 #       end
-# 
+#
 #       def header(text, header_level)
 #         text + "\\n"
 #       end
-# 
+#
 #       def table(header, body)
 #         "#{header}#{body}"
 #       end
-# 
+#
 #       def table_row(content)
 #         content + "\\n"
 #       end
-# 
+#
 #       def table_cell(content, alignment)
 #         content + "\\t"
 #       end

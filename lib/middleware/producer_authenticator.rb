@@ -12,7 +12,7 @@ module Middleware
 
       id, api_key = auth.credentials
 
-      unless id =~ Pliny::Middleware::RequestID::UUID_PATTERN
+      unless Pliny::Middleware::RequestID::UUID_PATTERN.match?(id)
         raise Pliny::Errors::Unauthorized
       end
 

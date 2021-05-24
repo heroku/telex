@@ -48,8 +48,8 @@ RSpec.describe Endpoints::ProducerAPI::Users do
           "role" => "admin",
           "user" => {
             "email" => user.email,
-            "id" => user.id,
-          },
+            "id" => user.id
+          }
         }]
       end
 

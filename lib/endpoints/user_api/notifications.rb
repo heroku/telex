@@ -2,7 +2,7 @@ module Endpoints
   class UserAPI::Notifications < Base
     namespace "/notifications" do
       before do
-        content_type :json, charset: 'utf-8'
+        content_type :json, charset: "utf-8"
       end
 
       get do
@@ -12,33 +12,33 @@ module Endpoints
         end
       end
 
-      patch '/mark-all-as-read' do
+      patch "/mark-all-as-read" do
         redis_retry do
           updated = Mediators::Notifications::ReadAll.run(user: current_user)
           encode({updated: updated})
         end
       end
 
-      patch '/:id' do |id|
+      patch "/:id" do |id|
         redis_retry do
           note = Mediators::Notifications::ReadStatusUpdater.run(notification: get_note(id), read_status: get_status)
           respond_json(note)
         end
       end
 
-      get '/unread-count' do
+      get "/unread-count" do
         redis_retry do
           unread_count = Mediators::Notifications::UnreadCounter.run(user: current_user)
           encode({unread_count: unread_count})
         end
       end
 
-      get '/:id/read.png' do |id|
+      get "/:id/read.png" do |id|
         note = ::Notification[id: id]
         raise Pliny::Errors::NotFound unless note
         Mediators::Notifications::ReadStatusUpdater.run(notification: note, read_status: true)
 
-        send_file './lib/templates/read.png'
+        send_file "./lib/templates/read.png"
       end
     end
 
@@ -54,17 +54,16 @@ module Endpoints
     end
 
     def get_note(id)
-      raise Pliny::Errors::UnprocessableEntity unless id =~ Pliny::Middleware::RequestID::UUID_PATTERN
+      raise Pliny::Errors::UnprocessableEntity unless Pliny::Middleware::RequestID::UUID_PATTERN.match?(id)
       note = ::Notification[id: id, user_id: current_user.id]
       raise Pliny::Errors::NotFound unless note
       note
     end
 
     def get_status
-      data.fetch('read')
+      data.fetch("read")
     rescue KeyError
       raise Pliny::Errors::UnprocessableEntity
     end
-
   end
 end

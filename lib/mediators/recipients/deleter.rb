@@ -3,7 +3,7 @@ module Mediators::Recipients
     attr_reader :recipient
 
     def initialize(recipient:)
-      @recipient = recipient 
+      @recipient = recipient
     end
 
     def call

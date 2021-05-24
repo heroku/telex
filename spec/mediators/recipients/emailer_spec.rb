@@ -9,7 +9,7 @@ RSpec.describe Mediators::Recipients::Emailer do
       notification_id: Pliny::Middleware::RequestID::UUID_PATTERN,
       subject: "hello myapp",
       body: "myapp #{recipient.verification_token}",
-      strip_text: true,
+      strip_text: true
     }
     allow(Telex::Emailer).to receive(:new).with(hash_including(args)) { emailer }
     allow(emailer).to receive(:deliver!)
@@ -24,7 +24,7 @@ RSpec.describe Mediators::Recipients::Emailer do
       notification_id: Pliny::Middleware::RequestID::UUID_PATTERN,
       subject: "hello",
       body: "myapp #{recipient.verification_token} {{yoyo}}",
-      strip_text: true,
+      strip_text: true
     }
     allow(Telex::Emailer).to receive(:new).with(hash_including(args)) { emailer }
     allow(emailer).to receive(:deliver!)
@@ -37,7 +37,7 @@ RSpec.describe Mediators::Recipients::Emailer do
       "{{yoyo}}",
       "",
       "{{app}}",
-      "{{token}}",
+      "{{token}}"
     ]
 
     bad_bodies.each do |body|

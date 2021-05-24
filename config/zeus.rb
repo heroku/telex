@@ -1,4 +1,4 @@
-require 'zeus/rails'
+require "zeus/rails"
 
 class CustomPlan < Zeus::Rails
   def boot
@@ -14,7 +14,7 @@ class CustomPlan < Zeus::Rails
   def test
   end
 
-  def rspec(argv=ARGV)
+  def rspec(argv = ARGV)
     require_relative "../spec/spec_helper"
     exit RSpec::Core::Runner.run(argv)
   end
@@ -25,11 +25,11 @@ class CustomPlan < Zeus::Rails
   end
 
   private
+
   def reconnect_sequel
     return unless defined?(Sequel)
     Sequel::DATABASES.each { |db| db.disconnect }
   end
-
 end
 
 Zeus.plan = CustomPlan.new

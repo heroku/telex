@@ -40,7 +40,7 @@ RSpec.describe Telex::HerokuClient, "#new" do
         status: 206,
         body: [{"id" => 1}].to_json,
         headers: {
-          "Next-Range" => "]1..; max=1000;",
+          "Next-Range" => "]1..; max=1000;"
         }
       )
 
@@ -65,7 +65,7 @@ RSpec.describe Telex::HerokuClient, "#new" do
 
       responses = [
         ['{ "capabilities": [{"capable": true}] }', true],
-        ['{ "capabilities": [{"capable": false}] }', false],
+        ['{ "capabilities": [{"capable": false}] }', false]
       ]
 
       responses.each do |payload, capable|
@@ -75,8 +75,8 @@ RSpec.describe Telex::HerokuClient, "#new" do
               capabilities: [{
                 capability: "view_metrics",
                 resource_id: id,
-                resource_type: "app",
-              }],
+                resource_type: "app"
+              }]
             }.to_json
           ).to_return(status: 200, body: payload, headers: {})
 
@@ -90,7 +90,7 @@ RSpec.describe Telex::HerokuClient, "#new" do
       bad_responses = [
         "{}",
         '{ "capabilities": null }',
-        '{ "capabilities": [] }',
+        '{ "capabilities": [] }'
       ]
 
       bad_responses.each do |bad_response|
@@ -100,8 +100,8 @@ RSpec.describe Telex::HerokuClient, "#new" do
               capabilities: [{
                 capability: "view_metrics",
                 resource_id: id,
-                resource_type: "app",
-              }],
+                resource_type: "app"
+              }]
             }.to_json
           ).to_return(status: 200, body: bad_response, headers: {})
 

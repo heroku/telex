@@ -15,7 +15,7 @@ RSpec.describe Endpoints::ProducerAPI::Messages do
     @message_body = {
       title: Faker::Company.bs,
       body: Faker::Company.bs,
-      target: {type: "user", id: SecureRandom.uuid},
+      target: {type: "user", id: SecureRandom.uuid}
     }
   end
 

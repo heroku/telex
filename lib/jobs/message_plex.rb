@@ -2,7 +2,7 @@ module Jobs
   class MessagePlex
     include Sidekiq::Worker
 
-    sidekiq_options :retry => 10
+    sidekiq_options retry: 10
 
     # The default retry is exponential
     sidekiq_retry_in do |count|

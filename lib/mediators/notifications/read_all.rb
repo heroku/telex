@@ -1,6 +1,5 @@
 module Mediators::Notifications
   class ReadAll < Mediators::Base
-
     attr_reader :user
     def initialize(user:)
       @user = user
@@ -16,6 +15,5 @@ module Mediators::Notifications
         .where(read_at: nil)
         .where(Sequel.lit("notifications.created_at > now() - '1 month'::interval"))
     end
-
   end
 end

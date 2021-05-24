@@ -27,7 +27,8 @@ module Mediators::Recipients
       end
     end
 
-  private
+    private
+
     def generate_confirmation_email
       Message.new(
         title: title.gsub(APP, app_info.fetch("name")),
@@ -43,7 +44,7 @@ module Mediators::Recipients
         subject: message.title,
         body: message.body,
         action: message.action,
-        strip_text: true,
+        strip_text: true
       )
       emailer.deliver!
     end

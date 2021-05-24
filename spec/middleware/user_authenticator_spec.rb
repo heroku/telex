@@ -3,8 +3,8 @@ module Middleware
     include HerokuAPIMock
 
     subject(:auther) { UserAuthenticator.new(app) }
-    let(:app)       { double(:app) }
-    let(:rack_env)  { {} }
+    let(:app) { double(:app) }
+    let(:rack_env) { {} }
     let(:rack_auth) { double(:auth) }
 
     describe "#call" do

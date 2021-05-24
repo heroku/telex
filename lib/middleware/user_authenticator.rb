@@ -56,8 +56,8 @@ module Middleware
       user_response = client.account_info
 
       user = find_or_create_user(
-        heroku_id: user_response.fetch('id'),
-        email:     user_response.fetch('email')
+        heroku_id: user_response.fetch("id"),
+        email: user_response.fetch("email")
       )
 
       cache_store user_id: user.id, key: key

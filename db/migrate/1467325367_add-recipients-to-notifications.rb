@@ -1,4 +1,4 @@
- Sequel.migration do
+Sequel.migration do
   change do
     alter_table(:notifications) do
       set_column_allow_null :user_id

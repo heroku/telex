@@ -10,12 +10,12 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
   if Config.timeout > 0
     use Rack::Timeout,
-        service_timeout: Config.timeout
+      service_timeout: Config.timeout
   end
   if Config.versioning?
     use Pliny::Middleware::Versioning,
-        default: Config.versioning_default,
-        app_name: Config.versioning_app_name
+      default: Config.versioning_default,
+      app_name: Config.versioning_app_name
   end
   use Rack::Deflater
 
@@ -25,7 +25,7 @@ Routes = Rack::Builder.new do
   use Rack::MethodOverride
   use Rack::SSL if Config.force_ssl?
 
-  map('/producer') do
+  map("/producer") do
     use Middleware::ProducerAuthenticator
     use Pliny::Router do
       mount Endpoints::ProducerAPI::Messages
@@ -33,21 +33,21 @@ Routes = Rack::Builder.new do
     end
   end
 
-  map('/user') do
+  map("/user") do
     use Middleware::UserAuthenticator
     use Pliny::Router do
       mount Endpoints::UserAPI::Notifications
     end
   end
 
-  map('/apps') do
+  map("/apps") do
     use Middleware::UserAuthenticator
     use Pliny::Router do
       mount Endpoints::AppAPI::Recipients
     end
   end
 
-  map('/health') do
+  map("/health") do
     run Endpoints::Health
   end
 

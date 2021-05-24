@@ -1,7 +1,7 @@
 module Middleware
   RSpec.describe ProducerAuthenticator do
-    let(:app)       { double(:app) }
-    let(:rack_env)  { double(:rack_env) }
+    let(:app) { double(:app) }
+    let(:rack_env) { double(:rack_env) }
     let(:rack_auth) { double(:auth) }
 
     let(:key1) { "passw0rd" }

@@ -11,7 +11,7 @@ module HerokuAPIMock
     user_response = MultiJson.encode({
       "email" => user.email,
       "id" => user.heroku_id,
-      "last_login" => Time.now.utc.iso8601,
+      "last_login" => Time.now.utc.iso8601
     })
 
     # intended for user finder, looking up current email address using telex's key
@@ -30,20 +30,20 @@ module HerokuAPIMock
     team = HerokuMockUser.new(
       SecureRandom.uuid,
       Faker::Internet.email(domain: "herokumananger.com"),
-      SecureRandom.uuid,
+      SecureRandom.uuid
     )
 
     members_response = admins.map do |admin|
       {
         id: admin.heroku_id,
         email: admin.email,
-        role: "admin",
+        role: "admin"
       }
     end
 
-    team_name = team.email.split('@').first
-    stub_heroku_api_request(:get, "#{Config.heroku_api_url}/teams/#{team_name}/members").
-      to_return(body: MultiJson.encode(members_response))
+    team_name = team.email.split("@").first
+    stub_heroku_api_request(:get, "#{Config.heroku_api_url}/teams/#{team_name}/members")
+      .to_return(body: MultiJson.encode(members_response))
 
     team
   end
@@ -56,8 +56,8 @@ module HerokuAPIMock
       "name" => "example",
       "owner" => {
         "email" => owner.email,
-        "id" => owner.heroku_id,
-      },
+        "id" => owner.heroku_id
+      }
     }
     stub_heroku_api_request(:get, "#{Config.heroku_api_url}/apps/#{app.id}")
       .to_return(body: MultiJson.encode(app_response))
@@ -70,8 +70,8 @@ module HerokuAPIMock
         "user" => {
           "email" => user.email,
           "id" => user.heroku_id,
-          "two_factor_authentication" => false,
-        },
+          "two_factor_authentication" => false
+        }
       }
     }
 
@@ -89,7 +89,7 @@ module HerokuAPIMock
   # This method calls create to rewrite the mocked collab response for a given app,
   # with the goal of being more obvious that an update is happening, rather than
   # calling create_heroku_app twice in the same test.
-  def update_app_collaborators(app, collaborators: , owner: app.owner)
+  def update_app_collaborators(app, collaborators:, owner: app.owner)
     create_heroku_app(id: app.id, collaborators: collaborators, owner: owner)
   end
 
