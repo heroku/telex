@@ -4,7 +4,7 @@ ruby "2.7.3"
 
 gem "clockwork"
 gem "erubis"
-gem "excon", "~> 0.79.0" # Prevent upgrading until DNS issues are resolved
+gem "excon", "~> 0.79.0" # Need upstream fix for DNS resolution: https://github.com/excon/excon/issues/747#issuecomment-840770108
 gem "mail"
 gem "multi_json"
 gem "oj"
