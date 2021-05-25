@@ -7,6 +7,7 @@ module Clockwork
     Thread.new do
       stats = Sidekiq::Stats.new
       Telex::Sample.sample "jobs.queue", value: stats.enqueued
+      Telex::Sample.sample "jobs.queue-latency", value: "#{stats.default_queue_latency}s"
     end
   end
 
