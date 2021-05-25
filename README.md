@@ -38,7 +38,7 @@ Telex is currently in maintenance only mode. Web Services handles maintenance
 updates and making sure the system is functioning properly but no new features
 are being added.
 
-If you have issues or questions, feel free to use `/pd ping` in `#core-services`
+If you have issues or questions, feel free to use `/pd ping` in `#web-services`
 on Slack for assistance.
 
 ## Setup
