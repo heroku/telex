@@ -36,8 +36,8 @@ module Mediators::Followups
       current_collabs.each do |c|
         if !notifiable_hids.include?(c.user.heroku_id)
           # not using the notification mediator here because it sends an email,
-          # which we also do in this mediator
-          new_notifiables << Notification.create(notifiable: c.user, message_id: message.id)
+          # which we also do in this mediator. Handle duplicates by finding existing:
+          new_notifiables << Notification.find_or_create(user: c.user, message_id: message.id)
         end
       end
 
