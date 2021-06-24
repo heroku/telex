@@ -47,6 +47,15 @@ RSpec.describe Plexer, "#call" do
     @plexer.call
   end
 
+  it "stub_non_herokumanager_requestdoes not create a TeamNotification" do
+    stub_non_herokumanager_request
+    @plexer.user_finder = double("user finder", call: @uwrs)
+
+    expect(Mediators::TeamNotifications::Creator).not_to receive(:run)
+
+    @plexer.call
+  end
+
   context "when app is owned by Web Services" do
     before do
       stub_team_members_request

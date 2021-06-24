@@ -16,7 +16,7 @@ module Mediators::TeamNotifications
       # ^ Typically an email send failure.
       # Remove team_notification before we re-raise so the mediator can be run
       # again.
-      TeamNotification.find_by(message_id: message.id, email: email).delete
+      TeamNotification.where(message_id: message.id, email: email).delete
       raise e
     end
 
