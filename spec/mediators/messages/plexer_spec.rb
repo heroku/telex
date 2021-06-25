@@ -47,7 +47,7 @@ RSpec.describe Plexer, "#call" do
     @plexer.call
   end
 
-  it "stub_non_herokumanager_requestdoes not create a TeamNotification" do
+  it "does not create a TeamNotification" do
     stub_non_herokumanager_request
     @plexer.user_finder = double("user finder", call: @uwrs)
 
