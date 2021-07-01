@@ -2,7 +2,7 @@ module Mediators::TeamNotifications
   class Creator < Mediators::Base
     def initialize(message:, available_team_notification:)
       self.message = message
-      self.email = team_notification_email(available_team_notification)
+      self.email = available_team_notification.team_notification_email
     end
 
     def call
@@ -11,7 +11,7 @@ module Mediators::TeamNotifications
       team_notification
     rescue Sequel::ValidationFailed, Sequel::UniqueConstraintViolation
       # TeamNotification already queued, just ignore.
-      Pliny.log(duplicate_team_notificaiton: true, message_id: message.id, email: email)
+      Pliny.log(duplicate_team_notification: true, message_id: message.id, email: email)
     rescue => e
       # ^ Typically an email send failure.
       # Remove team_notification before we re-raise so the mediator can be run
@@ -23,10 +23,6 @@ module Mediators::TeamNotifications
     private
 
     attr_accessor :message, :email, :team_notification
-
-    def team_notification_email(available_team_notification)
-      available_team_notification.team_notification_email
-    end
 
     def send_email
       emailer = Telex::Emailer.new(

@@ -11,7 +11,7 @@ module Mediators::Notifications
       notification
     rescue Sequel::ValidationFailed, Sequel::UniqueConstraintViolation
       # Notification already queued, just ignore.
-      Pliny.log(duplicate_notificaiton: true, notifiable_id: notifiable.id, notifiable_type: notifiable.class.name, message_id: message.id)
+      Pliny.log(duplicate_notification: true, notifiable_id: notifiable.id, notifiable_type: notifiable.class.name, message_id: message.id)
     rescue => e
       # ^ Typically an email send failure.
       # Remove the notification before we re-raise so the mediator can be run
