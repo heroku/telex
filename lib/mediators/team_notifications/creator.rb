@@ -24,8 +24,8 @@ module Mediators::TeamNotifications
 
     attr_accessor :message, :email, :team_notification
 
-    def team_notification_email(available_notification)
-      available_notification.team_notification_email
+    def team_notification_email(available_team_notification)
+      available_team_notification.team_notification_email
     end
 
     def send_email
