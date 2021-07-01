@@ -1,8 +1,8 @@
 module Mediators::TeamNotifications
   class Creator < Mediators::Base
-    def initialize(message:, email:)
+    def initialize(message:, available_team_notification:)
       self.message = message
-      self.email = email
+      self.email = team_notification_email(available_team_notification)
     end
 
     def call
@@ -23,6 +23,10 @@ module Mediators::TeamNotifications
     private
 
     attr_accessor :message, :email, :team_notification
+
+    def team_notification_email(available_notification)
+      available_notification.team_notification_email
+    end
 
     def send_email
       emailer = Telex::Emailer.new(

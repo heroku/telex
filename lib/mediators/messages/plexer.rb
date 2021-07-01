@@ -26,18 +26,18 @@ module Mediators::Messages
       end
 
       # We want to notify Slack Channels on team notifications so on-call people can be aware of events happening.
-      team_notification_email = get_team_notification_email
-      if team_notification_email.present?
-        Mediators::TeamNotifications::Creator.run(message: message, email: team_notification_email)
+      available_notification = get_available_notification
+      if available_notification.present?
+        Mediators::TeamNotifications::Creator.run(message: message, available_team_notification: available_notification)
       end
     end
 
-    def get_team_notification_email
-      return nil if message.target_type != Message::APP
+    def get_available_notification
+      return nil if message.target_type != Message::APP || app_info.nil?
 
       # As message.target_type == Message::APP, we can fetch info such as app owner email through app_info.
       owner_email = app_info.fetch("owner").fetch("email")
-      TeamNotification::NOTIFIABLE_TEAMS[owner_email]
+      AvailableTeamNotification.find(team_manager_email: owner_email)
     end
 
     def app_info

@@ -57,14 +57,21 @@ RSpec.describe Plexer, "#call" do
   end
 
   context "when app is owned by Web Services" do
+    let(:manager_email) { Faker::Internet.email }
+    let(:team_notification_email) { Faker::Internet.email  }
+    let(:expected_available_team_notification) { AvailableTeamNotification.find(team_notification_email: team_notification_email) }
+
     before do
-      stub_team_members_request
-      stub_owner_request(Config.web_services_manager_email_address, SecureRandom.uuid)
+      AvailableTeamNotification.create(team_notification_email: team_notification_email, team_manager_email: manager_email)
+      manager_id = SecureRandom.uuid
+      stub_team_members_request(manager_email)
+      stub_account_request(manager_id)
+      stub_owner_request(manager_email, manager_id)
     end
 
     it "creates a TeamNotification with the correct email address" do
       expect(Mediators::TeamNotifications::Creator).to receive(:run).with(
-        message: @message, email: Config.web_services_slack_channel_email_address
+        message: @message, available_team_notification: expected_available_team_notification
       )
 
       @plexer.call
@@ -73,8 +80,12 @@ RSpec.describe Plexer, "#call" do
 
   private
 
-  def stub_team_members_request
-    team = Config.web_services_manager_email_address.split("@").first
+  def stub_account_request(manager_id)
+    stub_heroku_api_request(:get, "#{client.uri}/account").to_return(status: 200, body: {"id" => manager_id, "last_login" => nil }.to_json)
+  end
+
+  def stub_team_members_request(email)
+    team = email.split("@").first
     stub_heroku_api_request(:get, "#{client.uri}/teams/#{team}/members").to_return(status: 200, body: [].to_json)
     stub_heroku_api_request(:get, "#{client.uri}/apps/#{@message.target_id}/collaborators").to_return(status: 200, body: [].to_json)
   end

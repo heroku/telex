@@ -1,6 +1,6 @@
 RSpec.describe Mediators::TeamNotifications::Creator do
   before do
-    @creator = described_class.new(email: Fabricate(:user).email, message: Fabricate(:message))
+    @creator = described_class.new(message: Fabricate(:message), available_notification: Fabricate(:available_team_notification))
   end
 
   it "creates a message" do
