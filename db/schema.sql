@@ -113,19 +113,19 @@ CREATE TABLE public.notifications (
 );
 
 CREATE TABLE public.team_notifications (
-                                           id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-                                           created_at timestamp with time zone DEFAULT now() NOT NULL,
-                                           updated_at timestamp with time zone,
-                                           message_id uuid NOT NULL,
-                                           email text NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone,
+    message_id uuid NOT NULL,
+    email text NOT NULL
 );
 
 CREATE TABLE public.available_team_notifications (
-                                                     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-                                                     created_at timestamp with time zone DEFAULT now() NOT NULL,
-                                                     updated_at timestamp with time zone,
-                                                     team_manager_email text NOT NULL,
-                                                     team_notification_email text NOT NULL
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone,
+    team_manager_email text NOT NULL,
+    team_notification_email text NOT NULL
 );
 
 --

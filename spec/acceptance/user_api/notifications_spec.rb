@@ -174,7 +174,7 @@ RSpec.describe Endpoints::UserAPI::Notifications do
       expect(last_response.status).to eq(200)
     end
 
-    it "returns a 404 for invalid notificaitons" do
+    it "returns a 404 for invalid notifications" do
       get "/user/notifications/#{SecureRandom.uuid}/read.png"
       expect(last_response.status).to eq(404)
     end

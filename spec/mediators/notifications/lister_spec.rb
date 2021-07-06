@@ -26,13 +26,13 @@ RSpec.describe Mediators::Notifications::Lister, "#call" do
       expect(lister.call).to eq([@n2, @n1])
     end
 
-    it "does not include notificaitons for older than one month" do
+    it "does not include notifications for older than one month" do
       @m3 = Fabricate(:message, producer: @p1)
       @n3 = Fabricate(:notification, user: @user, message: @m3, created_at: DateTime.now - 35)
       expect(lister.call).to_not include(@n3)
     end
 
-    it "does not include notificaitons for other users" do
+    it "does not include notifications for other users" do
       user2 = Fabricate(:user)
       note = Fabricate(:notification, user: user2)
 
