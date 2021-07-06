@@ -112,6 +112,21 @@ CREATE TABLE public.notifications (
     recipient_id uuid
 );
 
+CREATE TABLE public.team_notifications (
+                                           id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+                                           created_at timestamp with time zone DEFAULT now() NOT NULL,
+                                           updated_at timestamp with time zone,
+                                           message_id uuid NOT NULL,
+                                           email text NOT NULL
+);
+
+CREATE TABLE public.available_team_notifications (
+                                                     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+                                                     created_at timestamp with time zone DEFAULT now() NOT NULL,
+                                                     updated_at timestamp with time zone,
+                                                     team_manager_email text NOT NULL,
+                                                     team_notification_email text NOT NULL
+);
 
 --
 -- Name: producers; Type: TABLE; Schema: public; Owner: -
@@ -356,6 +371,13 @@ ALTER TABLE ONLY public.notifications
 
 
 --
+-- Name: notifications notifications_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.team_notifications
+    ADD CONSTRAINT team_notifications_message_id_fkey FOREIGN KEY (message_id) REFERENCES public.messages(id);
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -376,3 +398,5 @@ INSERT INTO "schema_migrations" ("filename") VALUES ('1467356858_add_email_to_me
 INSERT INTO "schema_migrations" ("filename") VALUES ('1543529321_add_dashboard_to_message_type.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('1566411434293_notifications_read_at_null_index.rb');
 INSERT INTO "schema_migrations" ("filename") VALUES ('1615300867_add_created_at_index.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1624557045_create_team_notifications.rb');
+INSERT INTO "schema_migrations" ("filename") VALUES ('1625144842_create_available_team_notifications.rb');
