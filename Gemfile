@@ -41,7 +41,7 @@ group :development do
 end
 
 group :test do
-  gem "addressable"
+  gem "addressable", ">= 2.8.0"
   gem "committee", ">= 3.0.1"
   gem "database_cleaner-sequel"
   gem "fabrication"
@@ -49,5 +49,5 @@ group :test do
   gem "guard-rspec"
   gem "rack-test", ">= 1.1.0"
   gem "rspec"
-  gem "webmock", "~> 3.12", ">= 3.12.1"
+  gem "webmock", "~> 3.13", ">= 3.13.0"
 end
